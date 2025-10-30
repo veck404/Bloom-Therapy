@@ -1,9 +1,61 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import {
+  motion,
+  type Variants,
+  useAnimationControls,
+  useMotionValueEvent,
+  useScroll,
+} from "framer-motion";
 import { fadeInUp, staggerParent } from "@/animations/variants";
 
+const introVariants: Variants = {
+  hiddenLeft: { opacity: 0, x: -160 },
+  center: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 2, ease: [0.16, 1, 0.3, 1] },
+  },
+  exitRight: {
+    opacity: 0,
+    x: 180,
+    transition: { duration: 1.4, ease: [0.4, 0, 0.2, 1] },
+  },
+};
+
 export function ClinicIntro() {
+  const controls = useAnimationControls();
+  const hasEnteredRef = useRef(false);
+  const lastScrollY = useRef(0);
+  const scrollDirection = useRef<"up" | "down">("down");
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (latest > lastScrollY.current) {
+      scrollDirection.current = "down";
+    } else if (latest < lastScrollY.current) {
+      scrollDirection.current = "up";
+    }
+    lastScrollY.current = latest;
+  });
+
+  const handleEnter = () => {
+    controls.start("center");
+    hasEnteredRef.current = true;
+  };
+
+  const handleLeave = (entry: IntersectionObserverEntry | null) => {
+    if (
+      hasEnteredRef.current &&
+      entry &&
+      scrollDirection.current === "down" &&
+      entry.boundingClientRect.bottom <= 0
+    ) {
+      controls.start("exitRight");
+    }
+  };
+
   return (
     <section
       id="about"
@@ -11,13 +63,21 @@ export function ClinicIntro() {
       aria-labelledby="clinic-intro-title"
     >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bloom-lavender/30 to-transparent" />
-      <div className="container">
+      <motion.div
+        className="container"
+        variants={introVariants}
+        initial="hiddenLeft"
+        animate={controls}
+        viewport={{ once: false, amount: 0.45 }}
+        onViewportEnter={handleEnter}
+        onViewportLeave={handleLeave}
+      >
         <motion.div
           className="grid gap-12 rounded-[3rem] bg-bloom-blush/70 p-10 backdrop-blur-lg lg:grid-cols-12 lg:p-16"
           variants={staggerParent(0.18)}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.4 }}
+          viewport={{ once: false, amount: 0.4 }}
         >
           <motion.div className="lg:col-span-4" variants={fadeInUp}>
             <p className="text-sm font-semibold uppercase tracking-[0.38em] text-bloom-orchid/80">
@@ -54,7 +114,7 @@ export function ClinicIntro() {
             </p>
           </motion.div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -33,13 +33,13 @@ export function SiteFooter() {
                 href="mailto:hello@bloomclinic.com"
                 className="rounded-full bg-white px-8 py-3 text-sm font-semibold text-bloom-plum transition hover:bg-bloom-blush"
               >
-                hello@bloomclinic.com
+                hello@bloomclinic.xyz
               </Link>
               <Link
-                href="tel:+13125551234"
+                href="tel:+2347066733522"
                 className="rounded-full border border-white/40 px-8 py-3 text-sm font-semibold text-white transition hover:border-white hover:bg-white/10"
               >
-                (312) 555 · 1234
+                (+234) 7066733522
               </Link>
             </div>
           </motion.div>
