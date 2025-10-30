@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { services } from "@/lib/data";
 import { hoverCard, staggerParent } from "@/animations/variants";
 import { useParallax } from "@/lib/hooks/use-parallax";
+import { ParallaxBlob } from "@/components/ui/parallax-blob";
 
 export function ServicesGrid() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -50,6 +51,17 @@ export function ServicesGrid() {
       aria-labelledby="services-title"
     >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bloom-sage/50 to-transparent" />
+      <ParallaxBlob
+        className="absolute left-[-160px] top-20 hidden h-[320px] w-[320px] rounded-full bg-bloom-lavender/25 blur-3xl md:block"
+        from={{ y: -60 }}
+        to={{ y: 120 }}
+        start="top bottom"
+      />
+      <ParallaxBlob
+        className="absolute right-[-140px] bottom-[-120px] h-[360px] w-[360px] rounded-full bg-bloom-terracotta/20 blur-3xl"
+        from={{ y: 100 }}
+        to={{ y: -160 }}
+      />
       <div className="container">
         <motion.div
           className="grid gap-10 lg:grid-cols-12"

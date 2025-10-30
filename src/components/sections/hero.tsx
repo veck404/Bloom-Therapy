@@ -7,6 +7,7 @@ import { fadeInUp, staggerParent } from "@/animations/variants";
 import { heroStats } from "@/lib/data";
 import Link from "next/link";
 import { useParallax } from "@/lib/hooks/use-parallax";
+import { ParallaxBlob } from "@/components/ui/parallax-blob";
 
 export function Hero() {
   const imageParallaxRef = useRef<HTMLDivElement | null>(null);
@@ -32,9 +33,25 @@ export function Hero() {
       className="relative overflow-hidden bg-gradient-to-b from-bloom-blush via-white to-bloom-blush pb-24 pt-32"
     >
       <div className="absolute inset-0 -z-10">
-        <div className="absolute -left-32 top-10 h-96 w-96 rounded-full bg-bloom-orchid/20 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-[420px] w-[420px] rounded-full bg-bloom-terracotta/10 blur-3xl" />
-        <div className="absolute left-1/2 top-32 h-[280px] w-[280px] -translate-x-1/2 rounded-full bg-bloom-lavender/10 blur-3xl" />
+        <ParallaxBlob
+          className="absolute -left-32 top-10 h-96 w-96 rounded-full bg-bloom-orchid/20 blur-3xl"
+          from={{ y: -40 }}
+          to={{ y: 70 }}
+          start="top 90%"
+          end="bottom top"
+        />
+        <ParallaxBlob
+          className="absolute bottom-0 right-0 h-[420px] w-[420px] rounded-full bg-bloom-terracotta/10 blur-3xl"
+          from={{ y: 40 }}
+          to={{ y: -120 }}
+          start="top bottom"
+        />
+        <ParallaxBlob
+          className="absolute left-1/2 top-32 h-[280px] w-[280px] -translate-x-1/2 rounded-full bg-bloom-lavender/10 blur-3xl"
+          from={{ y: -20, scale: 1 }}
+          to={{ y: 90, scale: 1.05 }}
+          scrub={0.6}
+        />
       </div>
       <div className="container">
         <motion.div

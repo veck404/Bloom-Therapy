@@ -10,6 +10,7 @@ import {
 } from "framer-motion";
 import { fadeInUp, staggerParent } from "@/animations/variants";
 import { useParallax } from "@/lib/hooks/use-parallax";
+import { ParallaxBlob } from "@/components/ui/parallax-blob";
 
 const introVariants: Variants = {
   hiddenLeft: { opacity: 0, x: -160 },
@@ -72,6 +73,18 @@ export function ClinicIntro() {
       aria-labelledby="clinic-intro-title"
     >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bloom-lavender/30 to-transparent" />
+      <ParallaxBlob
+        className="absolute -top-24 right-[-120px] h-72 w-72 rounded-full bg-bloom-lavender/15 blur-3xl"
+        from={{ y: 120 }}
+        to={{ y: -160 }}
+        start="top 95%"
+      />
+      <ParallaxBlob
+        className="absolute bottom-[-160px] left-[-100px] h-96 w-96 rounded-full bg-bloom-sand/40 blur-3xl"
+        from={{ y: -80 }}
+        to={{ y: 140 }}
+        start="top bottom"
+      />
       <div ref={parallaxRef} className="container">
         <motion.div
           variants={introVariants}

@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { testimonials } from "@/lib/data";
 import { fadeInUp } from "@/animations/variants";
 import { useParallax } from "@/lib/hooks/use-parallax";
+import { ParallaxBlob } from "@/components/ui/parallax-blob";
 
 export function Testimonials() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -50,6 +51,18 @@ export function Testimonials() {
       aria-labelledby="testimonials-title"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(147,74,63,0.15),transparent_45%),radial-gradient(circle_at_80%_10%,rgba(112,58,132,0.2),transparent_40%)]" />
+      <ParallaxBlob
+        className="absolute left-[-120px] top-24 h-72 w-72 rounded-full bg-bloom-terracotta/20 blur-3xl"
+        from={{ y: -50 }}
+        to={{ y: 120 }}
+        scrub={0.8}
+      />
+      <ParallaxBlob
+        className="absolute bottom-[-160px] right-[-140px] h-96 w-96 rounded-full bg-bloom-lavender/15 blur-3xl"
+        from={{ y: 140 }}
+        to={{ y: -180 }}
+        scrub={0.8}
+      />
       <div className="container relative">
         <motion.div
           initial="hidden"

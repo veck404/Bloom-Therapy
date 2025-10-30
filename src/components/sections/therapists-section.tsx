@@ -8,6 +8,7 @@ import { therapists } from "@/lib/data";
 import { TherapistCard } from "@/components/therapists/therapist-card";
 import { fadeInUp, staggerParent } from "@/animations/variants";
 import { useParallax } from "@/lib/hooks/use-parallax";
+import { ParallaxBlob } from "@/components/ui/parallax-blob";
 
 export function TherapistsSection() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
@@ -51,6 +52,16 @@ export function TherapistsSection() {
       aria-labelledby="therapists-title"
     >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bloom-lavender/30 to-transparent" />
+      <ParallaxBlob
+        className="absolute -left-24 top-1/3 h-72 w-72 rounded-full bg-bloom-lavender/15 blur-3xl"
+        from={{ y: -40 }}
+        to={{ y: 110 }}
+      />
+      <ParallaxBlob
+        className="absolute bottom-[-140px] right-[-120px] h-80 w-80 rounded-full bg-bloom-sand/40 blur-3xl"
+        from={{ y: 120 }}
+        to={{ y: -160 }}
+      />
       <div className="container">
         <motion.div
           className="grid gap-12 lg:grid-cols-12"
