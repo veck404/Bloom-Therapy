@@ -6,9 +6,11 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { testimonials } from "@/lib/data";
 import { fadeInUp } from "@/animations/variants";
+import { useParallax } from "@/lib/hooks/use-parallax";
 
 export function Testimonials() {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const parallaxRef = useRef<HTMLDivElement | null>(null);
 
   useGSAP(
     () => {
@@ -33,6 +35,13 @@ export function Testimonials() {
     },
     { scope: containerRef },
   );
+
+  useParallax(parallaxRef, {
+    from: 70,
+    to: -90,
+    start: "top bottom",
+    end: "bottom top",
+  });
 
   return (
     <section
@@ -69,24 +78,26 @@ export function Testimonials() {
           </motion.p>
         </motion.div>
 
-        <div
-          ref={containerRef}
-          className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
-        >
-          {testimonials.map((testimonial) => (
-            <motion.blockquote
-              key={testimonial.name}
-              className="testimonial-card flex h-full flex-col justify-between rounded-3xl border border-white/50 bg-white/90 p-8 text-bloom-plum shadow-soft backdrop-blur supports-[backdrop-filter]:bg-white/80"
-              initial={{ opacity: 0, y: 60 }}
-            >
-              <p className="text-lg leading-8 text-bloom-dusk">
-                “{testimonial.quote}”
-              </p>
-              <footer className="mt-8 text-sm font-semibold uppercase tracking-[0.28em] text-bloom-orchid">
-                {testimonial.name}
-              </footer>
-            </motion.blockquote>
-          ))}
+        <div ref={parallaxRef} className="mt-12">
+          <div
+            ref={containerRef}
+            className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+          >
+            {testimonials.map((testimonial) => (
+              <motion.blockquote
+                key={testimonial.name}
+                className="testimonial-card flex h-full flex-col justify-between rounded-3xl border border-white/50 bg-white/90 p-8 text-bloom-plum shadow-soft backdrop-blur supports-[backdrop-filter]:bg-white/80"
+                initial={{ opacity: 0, y: 60 }}
+              >
+                <p className="text-lg leading-8 text-bloom-dusk">
+                  “{testimonial.quote}”
+                </p>
+                <footer className="mt-8 text-sm font-semibold uppercase tracking-[0.28em] text-bloom-orchid">
+                  {testimonial.name}
+                </footer>
+              </motion.blockquote>
+            ))}
+          </div>
         </div>
       </div>
     </section>

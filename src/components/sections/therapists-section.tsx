@@ -7,9 +7,11 @@ import gsap from "gsap";
 import { therapists } from "@/lib/data";
 import { TherapistCard } from "@/components/therapists/therapist-card";
 import { fadeInUp, staggerParent } from "@/animations/variants";
+import { useParallax } from "@/lib/hooks/use-parallax";
 
 export function TherapistsSection() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
+  const parallaxRef = useRef<HTMLDivElement | null>(null);
 
   useGSAP(
     () => {
@@ -34,6 +36,13 @@ export function TherapistsSection() {
     },
     { scope: sectionRef },
   );
+
+  useParallax(parallaxRef, {
+    from: 60,
+    to: -90,
+    start: "top bottom",
+    end: "bottom top",
+  });
 
   return (
     <section
@@ -67,11 +76,8 @@ export function TherapistsSection() {
             </p>
           </motion.div>
 
-          <div
-            ref={sectionRef}
-            className="lg:col-span-8 lg:pl-6 xl:pl-12"
-          >
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <div ref={parallaxRef} className="lg:col-span-8 lg:pl-6 xl:pl-12">
+            <div ref={sectionRef} className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
               {therapists.map((therapist) => (
                 <div
                   key={therapist.name}

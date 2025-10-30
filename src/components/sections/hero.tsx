@@ -1,12 +1,31 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { fadeInUp, staggerParent } from "@/animations/variants";
 import { heroStats } from "@/lib/data";
 import Link from "next/link";
+import { useParallax } from "@/lib/hooks/use-parallax";
 
 export function Hero() {
+  const imageParallaxRef = useRef<HTMLDivElement | null>(null);
+  const statsParallaxRef = useRef<HTMLDivElement | null>(null);
+
+  useParallax(imageParallaxRef, {
+    from: -20,
+    to: -140,
+    start: "top bottom",
+    end: "bottom top",
+  });
+
+  useParallax(statsParallaxRef, {
+    from: 20,
+    to: -80,
+    start: "top bottom",
+    end: "bottom top",
+  });
+
   return (
     <section
       id="hero"
@@ -60,43 +79,47 @@ export function Hero() {
               </motion.div>
             </motion.div>
 
-            <motion.ul
-              className="mt-12 grid w-full gap-6 rounded-3xl border border-white/50 bg-white/70 p-6 backdrop-blur supports-[backdrop-filter]:bg-white/60 sm:grid-cols-3"
-              variants={staggerParent(0.1)}
-            >
-              {heroStats.map((stat) => (
-                <motion.li key={stat.label} variants={fadeInUp}>
-                  <p className="text-2xl font-semibold text-bloom-plum">
-                    {stat.value}
-                  </p>
-                  <p className="mt-1 text-sm text-bloom-lavender">
-                    {stat.label}
-                  </p>
-                </motion.li>
-              ))}
-            </motion.ul>
+            <div ref={statsParallaxRef} className="mt-12">
+              <motion.ul
+                className="grid w-full gap-6 rounded-3xl border border-white/50 bg-white/70 p-6 backdrop-blur supports-[backdrop-filter]:bg-white/60 sm:grid-cols-3"
+                variants={staggerParent(0.1)}
+              >
+                {heroStats.map((stat) => (
+                  <motion.li key={stat.label} variants={fadeInUp}>
+                    <p className="text-2xl font-semibold text-bloom-plum">
+                      {stat.value}
+                    </p>
+                    <p className="mt-1 text-sm text-bloom-lavender">
+                      {stat.label}
+                    </p>
+                  </motion.li>
+                ))}
+              </motion.ul>
+            </div>
           </motion.div>
 
           <motion.div
             className="relative lg:col-span-6 xl:col-span-7"
             variants={fadeInUp}
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.94, y: 30 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-              className="relative overflow-hidden rounded-[2.5rem] border border-white/60 bg-white/80 shadow-[0_40px_80px_rgba(76,31,57,0.12)]"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-bloom-plum/5 to-bloom-orchid/20" />
-              <Image
-                src="/images/hero-session.jpg"
-                alt="Therapist supporting a patient in a serene Bloom session"
-                width={900}
-                height={900}
-                className="h-full w-full object-cover"
-                priority
-              />
-            </motion.div>
+            <div ref={imageParallaxRef}>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.94, y: 30 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+                className="relative overflow-hidden rounded-[2.5rem] border border-white/60 bg-white/80 shadow-[0_40px_80px_rgba(76,31,57,0.12)]"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-bloom-plum/5 to-bloom-orchid/20" />
+                <Image
+                  src="/images/hero-session.jpg"
+                  alt="Therapist supporting a patient in a serene Bloom session"
+                  width={900}
+                  height={900}
+                  className="h-full w-full object-cover"
+                  priority
+                />
+              </motion.div>
+            </div>
 
             <motion.div
               className="absolute -left-14 bottom-10 hidden max-w-[220px] rounded-3xl border border-white/70 bg-white/80 p-5 text-bloom-plum shadow-soft backdrop-blur md:block"

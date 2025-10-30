@@ -6,9 +6,11 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { services } from "@/lib/data";
 import { hoverCard, staggerParent } from "@/animations/variants";
+import { useParallax } from "@/lib/hooks/use-parallax";
 
 export function ServicesGrid() {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const parallaxRef = useRef<HTMLDivElement | null>(null);
 
   useGSAP(
     () => {
@@ -33,6 +35,13 @@ export function ServicesGrid() {
     },
     { scope: containerRef },
   );
+
+  useParallax(parallaxRef, {
+    from: 60,
+    to: -100,
+    start: "top bottom",
+    end: "bottom top",
+  });
 
   return (
     <section
@@ -73,12 +82,13 @@ export function ServicesGrid() {
             </motion.p>
           </div>
 
-          <div className="lg:col-span-8" ref={containerRef}>
-            <div className="grid gap-6 sm:grid-cols-2">
-              {services.map((service) => (
-                <motion.div
-                  key={service.title}
-                  className="service-card group relative h-full rounded-3xl border border-white/40 bg-white/80 p-8 shadow-soft backdrop-blur transition supports-[backdrop-filter]:bg-white/70"
+          <div className="lg:col-span-8" ref={parallaxRef}>
+            <div ref={containerRef}>
+              <div className="grid gap-6 sm:grid-cols-2">
+                {services.map((service) => (
+                  <motion.div
+                    key={service.title}
+                    className="service-card group relative h-full rounded-3xl border border-white/40 bg-white/80 p-8 shadow-soft backdrop-blur transition supports-[backdrop-filter]:bg-white/70"
                   variants={hoverCard}
                   initial="rest"
                   whileHover="hover"
@@ -104,6 +114,7 @@ export function ServicesGrid() {
                   </div>
                 </motion.div>
               ))}
+            </div>
             </div>
           </div>
         </motion.div>
